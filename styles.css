@@ -1,0 +1,107 @@
+
+body {
+    --max-width: 1236px;
+    --grid-gap: 4px;
+    --primary-color: #FB8C00;
+    background-color: #f5f5f5;
+    font-family: "Roboto", serif;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background-color: var(--primary-color);
+}
+
+.platinum, .gold, .silver {
+    display: grid;
+    gap: var(--grid-gap);
+}
+
+.platinum {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.gold {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.silver {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.platinum > div, .gold > div, .silver > div {
+    display: grid;
+    gap: var(--grid-gap);
+}
+
+.platinum > div {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.gold > div {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.silver > div {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.platinum > div > div,
+.gold > div > div,
+.silver > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    border-radius: 2px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.listing-item
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: hidden;
+}
+
+.images {
+    display: flex;
+    gap: 2px;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.images img {
+    width: 200px;
+    flex-shrink: 0;
+    object-fit: cover;
+    scroll-snap-align: start
+}
+
+.images::-webkit-scrollbar {
+    height: 6px;
+}
+
+.images::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+}
+
+.images::-webkit-scrollbar-track {
+    background: #eee;
+}

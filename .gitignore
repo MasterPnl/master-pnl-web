@@ -1,0 +1,48 @@
+# Çekirdek PHP dosyalarını koru, ancak hassas verileri hariç tut
+
+# 🌐 Çıkış dosyaları ve loglar
+*.log
+*.cache
+*.tmp
+
+# 🛑 Hassas bilgiler (dotenv dosyaları)
+.env
+.env.local
+.env.*.local
+.env.php
+
+# 📂 Composer bağımlılıkları (vendor klasörünü yükleme)
+vendor/
+
+# 🗑️ IDE ve OS dosyaları
+# - MacOS
+.DS_Store
+# - Windows
+Thumbs.db
+Desktop.ini
+# - IDE'ler
+*.iml
+.idea/
+.vscode/
+nbproject/
+
+# 🔧 PHP bağımlılıkları ve yükleme dosyaları
+composer.lock
+node_modules/
+package-lock.json
+yarn.lock
+
+# 📦 Cache ve Temp dosyaları
+*.swp
+*.swo
+*.bak
+*.old
+*.sql
+*.sql.gz
+*.zip
+*.tar
+*.tar.gz
+
+# 🚀 Laravel, Symfony gibi framework klasörleri (Eğer kullanıyorsan)
+bootstrap/cache/
+storage/
