@@ -27,62 +27,58 @@ $showcaseCount = $db->getOne('showcase');
 $userListing = $db->get('userlisting');
 $userListingImages = $db->get('userlistingphoto');
 $showcaseData = [];
-$showcaseIndex = 1;
 $categories = [
     ["key" => "platinum", "columns" => 2],
     ["key" => "gold", "columns" => 3],
     ["key" => "silver", "columns" => 5]
 ];
 
-foreach ($categories as $category) {
-    $key = $category['key'];
-    for ($i = 0; $i < $showcaseCount[$key]; $i++, $showcaseIndex++) {
-        $data = current(array_filter($userListing, fn($item) => $item['showcaseIndex'] == $showcaseIndex)) ?: [];
-        if (!empty($data)) {
-            $images = array_values(array_filter($userListingImages, fn($img) => $img['userId'] == ($data['userId'] ?? null) && $img['showcaseIndex'] == $showcaseIndex));
-            if (!empty($images)) {
-                foreach ($images as $image) {
-                    $imagePath = API_URL . '/images/' . $image['path'];
-                    $encryptedPath = encryptPath($imagePath);
-                    $data['images'][] = "file.php?img=$encryptedPath";
-                }
+for ($index = 1; $index <= count($userListing); $index++) {
+    $data = current(array_filter($userListing, fn($item) => $item['showcaseIndex'] == $index)) ?: [];
+    if (!empty($data)) {
+        $images = array_values(array_filter($userListingImages, fn($img) => $img['userId'] === $data['userId'] && $img['showcaseIndex'] == $index));
+        if (!empty($images)) {
+            foreach ($images as $image) {
+                $imagePath = API_URL . '/images/' . $image['path'];
+                $encryptedPath = encryptPath($imagePath);
+                $data['images'][] = "file.php?img=$encryptedPath";
             }
         }
-
-        $showcaseData[$key][] = $data;;
     }
+    $showcaseData[] = $data;
 }
 ?>
 <nav>
     <h1>Başlık</h1>
 </nav>
 <main>
+    <?php $showcaseIndex = 0 ?>
     <?php foreach ($categories as $category): ?>
-        <?php if (!empty($showcaseData[$category['key']])): ?>
-            <section class="<?= $category['key'] ?>">
-                <?php foreach ($showcaseData[$category['key']] as $item): ?>
-                    <div>
-                        <?php for ($i = 0; $i < $category['columns']; $i++): ?>
-                            <div class="listing-item">
-                                <h2>
-                                    <?= !empty($item) ? htmlspecialchars($item['title'] ?? 'Veri Yok') : 'İlan Yok' ?>
-                                </h2>
-                                <?php if (!empty($item['images'])): ?>
-                                    <div class="images">
-                                        <?php foreach ($item['images'] as $image): ?>
-                                            <img src="<?= $image ?>" alt="<?= $item['title'] ?>">
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if (!empty($item)): ?>
-                                    <p>Telefon: <?= $item['phone'] ?></p>
-                                <?php endif; ?>
+        <section class="<?= $category['key'] ?>">
+            <div>
+                <?php for ($i = 0; $i < $category['columns']; $i++): ?>
+                    <div class="listing-item">
+                        <?php
+                            $showcaseIndex++;
+                            $item = current(array_filter($showcaseData, fn($item) => $item['showcaseIndex'] == $showcaseIndex)) ?: [];
+                        ?>
+                        <h2>
+                            <?= !empty($item) ? htmlspecialchars($item['title'] ?? 'Veri Yok') : 'İlan Yok' ?>
+                        </h2>
+                        <?php if (!empty($item['images'])): ?>
+                            <div class="images">
+                                <?php foreach ($item['images'] as $image): ?>
+                                    <img src="<?= $image ?>" alt="<?= $item['title'] ?>">
+                                <?php endforeach; ?>
                             </div>
-                        <?php endfor; ?>
+                        <?php endif; ?>
+                        <?php if (!empty($item)): ?>
+                            <p>Telefon: <?= $item['phone'] ?></p>
+                        <?php endif; ?>
                     </div>
-                <?php endforeach; ?>
-            </section>
-        <?php endif; ?>
+                <?php endfor; ?>
+            </div>
+        </section>
     <?php endforeach; ?>
 </main>
 <footer>
