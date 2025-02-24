@@ -28,9 +28,9 @@ $userListing = $db->get('userlisting');
 $userListingImages = $db->get('userlistingphoto');
 $showcaseData = [];
 $categories = [
-    ["key" => "platinum", "columns" => 2],
-    ["key" => "gold", "columns" => 3],
-    ["key" => "silver", "columns" => 5]
+    ["key" => "platinum", "rows" => 2, 'cols' => $showcaseCount['platinum'] ?? 0],
+    ["key" => "gold", "rows" => 3, 'cols' => $showcaseCount['gold'] ?? 0],
+    ["key" => "silver", "rows" => 5, 'cols' => $showcaseCount['silver'] ?? 0]
 ];
 
 for ($index = 1; $index <= count($userListing); $index++) {
@@ -55,29 +55,31 @@ for ($index = 1; $index <= count($userListing); $index++) {
     <?php $showcaseIndex = 0 ?>
     <?php foreach ($categories as $category): ?>
         <section class="<?= $category['key'] ?>">
-            <div>
-                <?php for ($i = 0; $i < $category['columns']; $i++): ?>
-                    <div class="listing-item">
-                        <?php
+            <?php for ($i = 0; $i < $category['cols']; $i++): ?>
+                <div>
+                    <?php for ($j = 0; $j < $category['rows']; $j++): ?>
+                        <div class="listing-item">
+                            <?php
                             $showcaseIndex++;
                             $item = current(array_filter($showcaseData, fn($item) => $item['showcaseIndex'] == $showcaseIndex)) ?: [];
-                        ?>
-                        <h2>
-                            <?= !empty($item) ? htmlspecialchars($item['title'] ?? 'Veri Yok') : 'İlan Yok' ?>
-                        </h2>
-                        <?php if (!empty($item['images'])): ?>
-                            <div class="images">
-                                <?php foreach ($item['images'] as $image): ?>
-                                    <img src="<?= $image ?>" alt="<?= $item['title'] ?>">
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                        <?php if (!empty($item)): ?>
-                            <p>Telefon: <?= $item['phone'] ?></p>
-                        <?php endif; ?>
-                    </div>
-                <?php endfor; ?>
-            </div>
+                            ?>
+                            <h2>
+                                <?= !empty($item) ? htmlspecialchars($item['title'] ?? 'Veri Yok') : 'İlan Yok' ?>
+                            </h2>
+                            <?php if (!empty($item['images'])): ?>
+                                <div class="images">
+                                    <?php foreach ($item['images'] as $image): ?>
+                                        <img src="<?= $image ?>" alt="<?= $item['title'] ?>">
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!empty($item)): ?>
+                                <p>Telefon: <?= $item['phone'] ?></p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endfor; ?>
+                </div>
+            <?php endfor; ?>
         </section>
     <?php endforeach; ?>
 </main>
