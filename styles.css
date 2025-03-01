@@ -1,8 +1,8 @@
 
 body {
     --max-width: 1236px;
-    --grid-gap: 4px;
     --primary-color: #FB8C00;
+    --image-height: 150px;
     background-color: #f5f5f5;
     font-family: "Roboto", serif;
 }
@@ -10,9 +10,8 @@ body {
 main {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
     max-width: var(--max-width);
-    margin: 4px auto;
+    margin: 0 auto;
 }
 
 nav{
@@ -25,7 +24,6 @@ nav{
 
 .platinum, .gold, .silver {
     display: grid;
-    gap: var(--grid-gap);
 }
 
 .platinum {
@@ -42,7 +40,6 @@ nav{
 
 .platinum > div, .gold > div, .silver > div {
     display: grid;
-    gap: var(--grid-gap);
 }
 
 .platinum > div {
@@ -54,19 +51,19 @@ nav{
 }
 
 .silver > div {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .platinum > div > div,
 .gold > div > div,
 .silver > div > div {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 200px;
-    border-radius: 2px;
     text-align: center;
     background-color: #fff;
+    height: var(--image-height);
 }
 
 .listing-item
@@ -75,26 +72,28 @@ nav{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     overflow-x: hidden;
+    outline: 1px solid var(--primary-color);
 }
 
 .images {
     display: flex;
-    gap: 2px;
     max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .images img {
-    width: 200px;
+    height: var(--image-height);
     flex-shrink: 0;
     object-fit: cover;
-    scroll-snap-align: start
+    scroll-snap-align: start;
+    aspect-ratio: 2/3;
+
 }
 
 .images::-webkit-scrollbar {
-    height: 6px;
+    height: 1px;
 }
 
 .images::-webkit-scrollbar-thumb {
@@ -104,4 +103,43 @@ nav{
 
 .images::-webkit-scrollbar-track {
     background: #eee;
+}
+
+.listing-title{
+    position: absolute;
+    top: 5px;
+    width: max-content;
+    text-align: center;
+    font-weight: bold;
+    color: #4caf50;
+    text-shadow:
+            0.5px 0.5px 0 #000,
+            -0.5px 0.5px 0 #000,
+            -0.5px -0.5px 0 #000,
+            0.5px -0.5px 0 #000;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 2px;
+}
+
+.whatsapp-contact {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 6px;
+    background-color: #4caf50;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    gap: 4px;
+    padding: 4px;
+    justify-content: center;
+}
+
+.whatsapp-contact > img{
+    width: 12px;
+}
+
+.whatsapp-contact > span{
+    color: #fff;
+    font-size: 10px;
 }

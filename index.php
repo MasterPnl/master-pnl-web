@@ -14,7 +14,6 @@
     <link rel="canonical" href="https://www.siteniz.com/">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
 
 </head>
 <body>
@@ -30,13 +29,12 @@ $showcaseData = [];
 $categories = [
     ["key" => "platinum", "rows" => 2, 'cols' => $showcaseCount['platinum'] ?? 0],
     ["key" => "gold", "rows" => 3, 'cols' => $showcaseCount['gold'] ?? 0],
-    ["key" => "silver", "rows" => 5, 'cols' => $showcaseCount['silver'] ?? 0]
+    ["key" => "silver", "rows" => 4, 'cols' => $showcaseCount['silver'] ?? 0]
 ];
-
-for ($index = 1; $index <= count($userListing); $index++) {
-    $data = current(array_filter($userListing, fn($item) => $item['showcaseIndex'] == $index)) ?: [];
+for ($index = 0; $index < count($userListing); $index++) {
+    $data = $userListing[$index];
     if (!empty($data)) {
-        $images = array_values(array_filter($userListingImages, fn($img) => $img['userId'] === $data['userId'] && $img['showcaseIndex'] == $index));
+        $images = array_values(array_filter($userListingImages, fn($img) => $img['userId'] === $data['userId'] && $img['showcaseIndex'] == $data['showcaseIndex']));
         if (!empty($images)) {
             foreach ($images as $image) {
                 $imagePath = API_URL . '/images/' . $image['path'];
@@ -63,7 +61,7 @@ for ($index = 1; $index <= count($userListing); $index++) {
                             $showcaseIndex++;
                             $item = current(array_filter($showcaseData, fn($item) => $item['showcaseIndex'] == $showcaseIndex)) ?: [];
                             ?>
-                            <h2>
+                            <h2 class="listing-title">
                                 <?= !empty($item) ? htmlspecialchars($item['title'] ?? 'Veri Yok') : 'İlan Yok' ?>
                             </h2>
                             <?php if (!empty($item['images'])): ?>
@@ -74,7 +72,10 @@ for ($index = 1; $index <= count($userListing); $index++) {
                                 </div>
                             <?php endif; ?>
                             <?php if (!empty($item)): ?>
-                                <p>Telefon: <?= $item['phone'] ?></p>
+                            <div class="whatsapp-contact">
+                                <img src="assets/whatsapp.png">
+                                <span><?= $item['phone'] ?></span>
+                            </div>
                             <?php endif; ?>
                         </div>
                     <?php endfor; ?>
