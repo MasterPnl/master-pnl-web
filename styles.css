@@ -14,7 +14,7 @@ main {
     margin: 0 auto;
 }
 
-nav{
+nav {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,26 +54,23 @@ nav{
     grid-template-columns: repeat(4, 1fr);
 }
 
-.platinum > div > div,
-.gold > div > div,
-.silver > div > div {
+.platinum > div > .listing-item,
+.gold > div > .listing-item,
+.silver > div > .listing-item {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     background-color: #fff;
     height: var(--image-height);
 }
 
-.listing-item
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.listing-item {
+    outline: 1px solid rgba(251, 140, 0, 0.25);
     overflow-x: hidden;
-    outline: 1px solid var(--primary-color);
+}
+
+.listing-link {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
 }
 
 .images {
@@ -89,7 +86,6 @@ nav{
     object-fit: cover;
     scroll-snap-align: start;
     aspect-ratio: 2/3;
-
 }
 
 .images::-webkit-scrollbar {
@@ -105,18 +101,14 @@ nav{
     background: #eee;
 }
 
-.listing-title{
+.listing-title {
     position: absolute;
     top: 5px;
     width: max-content;
     text-align: center;
     font-weight: bold;
-    color: #4caf50;
-    text-shadow:
-            0.5px 0.5px 0 #000,
-            -0.5px 0.5px 0 #000,
-            -0.5px -0.5px 0 #000,
-            0.5px -0.5px 0 #000;
+    color: #60dc65;
+    text-shadow: -1px -1px 0 #000, 0 -1px 0 #000, 1px -1px 0 #000, 1px 0 0 #000, 1px 1px 0 #000, 0 1px 0 #000, -1px 1px 0 #000, -1px 0 0 #000;
     font-size: 16px;
     line-height: 16px;
     letter-spacing: 2px;
@@ -133,13 +125,66 @@ nav{
     gap: 4px;
     padding: 4px;
     justify-content: center;
+    text-decoration: none;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.whatsapp-contact > img{
+.whatsapp-contact > img {
     width: 12px;
 }
 
-.whatsapp-contact > span{
+.whatsapp-contact > span {
     color: #fff;
     font-size: 10px;
+}
+
+/*detail styles*/
+
+.detail{
+    display: flex;
+    flex-direction: column;
+    max-width: var(--max-width);
+    align-items: center;
+    gap: 16px;
+}
+
+.whatsapp-contact-detail {
+    display: flex;
+    align-items: center;
+    background-color: #4caf50;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    gap: 4px;
+    padding: 4px;
+    justify-content: center;
+    text-decoration: none;
+    width: max-content;
+}
+
+.whatsapp-contact-detail > img {
+    width: 24px;
+}
+
+.whatsapp-contact-detail > span {
+    color: #fff;
+    font-size: 16px;
+}
+
+.detail-images {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.detail-images > img {
+    height: var(--image-height);
+    aspect-ratio: 2/3;
+}
+
+.detail-title{
+    font-size: 18px;
+    padding: 5px;
+    text-align: center;
 }

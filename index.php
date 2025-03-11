@@ -45,6 +45,8 @@ for ($index = 0; $index < count($userListing); $index++) {
     }
     $showcaseData[] = $data;
 }
+
+
 ?>
 <nav>
     <h1>Başlık</h1>
@@ -56,26 +58,28 @@ for ($index = 0; $index < count($userListing); $index++) {
             <?php for ($i = 0; $i < $category['cols']; $i++): ?>
                 <div>
                     <?php for ($j = 0; $j < $category['rows']; $j++): ?>
+                        <?php
+                        $showcaseIndex++;
+                        $item = current(array_filter($showcaseData, fn($item) => $item['showcaseIndex'] == $showcaseIndex)) ?: [];
+                        ?>
                         <div class="listing-item">
-                            <?php
-                            $showcaseIndex++;
-                            $item = current(array_filter($showcaseData, fn($item) => $item['showcaseIndex'] == $showcaseIndex)) ?: [];
-                            ?>
-                            <h2 class="listing-title">
-                                <?= !empty($item) ? htmlspecialchars($item['title'] ?? 'Veri Yok') : 'İlan Yok' ?>
-                            </h2>
-                            <?php if (!empty($item['images'])): ?>
-                                <div class="images">
-                                    <?php foreach ($item['images'] as $image): ?>
-                                        <img src="<?= $image ?>" alt="<?= $item['title'] ?>">
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endif; ?>
+                            <a class="listing-link" href="<?= !empty($item) ? "detay.php?id=$showcaseIndex" : "#" ?>">
+                                <h2 class="listing-title">
+                                    <?= !empty($item) ? htmlspecialchars($item['title'] ?? 'Veri Yok') : 'İlan Yok' ?>
+                                </h2>
+                                <?php if (!empty($item['images'])): ?>
+                                    <div class="images">
+                                        <?php foreach ($item['images'] as $image): ?>
+                                            <img src="<?= $image ?>" alt="<?= $item['title'] ?>">
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </a>
                             <?php if (!empty($item)): ?>
-                            <div class="whatsapp-contact">
-                                <img src="assets/whatsapp.png">
-                                <span><?= $item['phone'] ?></span>
-                            </div>
+                                <a href="https://wa.me/<?= $item['phone'] ?>" target="_blank" class="whatsapp-contact">
+                                    <img src="assets/whatsapp.png" alt="whatsapp">
+                                    <span><?= $item['phone'] ?></span>
+                                </a>
                             <?php endif; ?>
                         </div>
                     <?php endfor; ?>
